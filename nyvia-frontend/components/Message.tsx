@@ -10,7 +10,7 @@ export default function Message({ role, content }: MessageProps) {
     <div className={`group w-full px-4 py-6 ${isUser ? 'bg-white' : 'bg-gray-50'}`}>
       <div className="max-w-3xl mx-auto flex gap-4">
         {/* Avatar */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           {isUser ? (
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
               <span className="text-xs font-medium text-gray-600">U</span>
