@@ -99,7 +99,7 @@ export default function Home() {
           <button
             onClick={sendMessage}
             disabled={isLoading}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded disabled:opacity-50"
+            className="px-4 py-2 bg-[#9749E3] text-white rounded hover:bg-[#7C3AB8] transition-colors disabled:opacity-50"
           >
             {isLoading ? 'Enviando...' : 'Enviar'}
           </button>

@@ -11,7 +11,7 @@ export default function Sidebar({ onNewChat }: SidebarProps) {
       <div className="p-4">
         <button
           onClick={onNewChat}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#9749E3] text-white rounded-lg hover:bg-[#7C3AB8] transition-colors font-medium"
         >
           <span className="text-xl">+</span>
           <span>Nova Consulta</span>
