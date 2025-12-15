@@ -3,12 +3,12 @@
  paleta de cores nyvia como referência ->  
 
 /* Color Theme Swatches in Hex */
-.My-Color-Theme-1-hex { color: #495EE3; }  
+.My-Color-Theme-1-hex { color: #495EE3; } -> padrão azul  
 .My-Color-Theme-2-hex { color: #9749E3; } -> padrão roxo
 .My-Color-Theme-3-hex { color: #FFFFFF; } -> padrão branco
-.My-Color-Theme-4-hex { color: #498FE3; }
-.My-Color-Theme-5-hex { color: #CA49E3; }
-.My-Color-Theme-6-hex { color: #A394E3; }
+.My-Color-Theme-4-hex { color: #498FE3; } -> padrão azul claro
+.My-Color-Theme-5-hex { color: #CA49E3; } -> padrão rosa 
+.My-Color-Theme-6-hex { color: #A394E3; } -> padrão lilás
 
 /* Color Theme Swatches in RGBA */
 .My-Color-Theme-1-rgba { color: rgba(73, 94, 227, 1); }
