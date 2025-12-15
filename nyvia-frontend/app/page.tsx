@@ -8,9 +8,17 @@ export default function Home() {
   const [messages, setMessages] = useState<Array<{role: string, content: string}>>([])
   const [isLoading, setIsLoading] = useState(false)
 
+  const [activeWorkspaceId, setActiveWorkspaceId] = useState(1) // Default workspace ID used
+    // In a real app, you might fetch this from user settings or similar
+
   const handleNewChat = () => {
     setMessages([])
     setMessage('')
+  }
+
+  const handleWorkspaceChange = (workspaceId: number) => {
+    setActiveWorkspaceId(workspaceId)
+    setMessages([])
   }
 
   const sendMessage = async () => {
@@ -29,7 +37,7 @@ export default function Home() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          workspaceId: 1,
+          workspaceId: activeWorkspaceId,
           message
         })
       })
@@ -73,7 +81,11 @@ export default function Home() {
 
   return (
     <div className="flex h-screen">
-      <Sidebar onNewChat={handleNewChat} />
+      <Sidebar 
+        onNewChat={handleNewChat}
+        activeWorkspaceId={activeWorkspaceId}
+        onWorkspaceChange={handleWorkspaceChange}
+      />
       
       <main className="flex-1 flex flex-col max-w-4xl mx-auto w-full p-4">
         <h1 className="text-2xl font-bold mb-4 text-gray-900">Nyvia Chat</h1>
