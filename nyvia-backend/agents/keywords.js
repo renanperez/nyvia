@@ -19,17 +19,19 @@ Quando receber um briefing, forneça:
 
 IMPORTANTE: Você fornece inteligência, não copy pronto.`;
 
-    const messages = history
-      .filter(m => m.role !== 'system')
-      .map(m => ({ role: m.role, content: m.content }));
-    
-    messages.push({ role: 'user', content: message });
+    // Construir o histórico de mensagens
+
+    const systemMessages = history.filter(m => m.role === 'system').map(m => m.content).join('\n\n');
+    const conversationMessages = history.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.content }));
+      conversationMessages.push({ role: 'user', content: message });
+
+    const finalSystemPrompt = systemPrompt + (systemMessages ? '\n\n' + systemMessages : '');
 
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
-      system: systemPrompt,
-      messages
+      system: finalSystemPrompt,
+      messages: conversationMessages
     });
 
     return { content: response.content[0].text };
@@ -49,17 +51,17 @@ Quando receber um briefing, forneça:
 
 IMPORTANTE: Você fornece inteligência, não copy pronto.`;
 
-    const messages = history
-      .filter(m => m.role !== 'system')
-      .map(m => ({ role: m.role, content: m.content }));
-    
-    messages.push({ role: 'user', content: message });
+    const systemMessages = history.filter(m => m.role === 'system').map(m => m.content).join('\n\n');
+    const conversationMessages = history.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.content }));
+    conversationMessages.push({ role: 'user', content: message });
+
+    const finalSystemPrompt = systemPrompt + (systemMessages ? '\n\n' + systemMessages : '');
 
     const stream = await anthropic.messages.stream({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
-      system: systemPrompt,
-      messages
+      system: finalSystemPrompt,
+      messages: conversationMessages
     });
 
     for await (const chunk of stream) {

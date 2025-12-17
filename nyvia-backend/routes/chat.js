@@ -26,9 +26,15 @@ router.post('/', async (req, res) => { // Rota para processar mensagens do usuá
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     
+    // Buscar histórico da conversa
+    const history = db.getConversationHistory(convId);
+    let fullResponse = '';
+
     // Buscar e ler artifacts do workspace
     const artifacts = db.getArtifactsByWorkspace(workspaceId);
     let artifactsContext = '';
+
+      console.log('📄 Artifacts encontrados:', artifacts.length)
 
     if (artifacts.length > 0) {
       artifactsContext = '\n\n=== DOCUMENTOS DO CLIENTE ===\n';
@@ -38,6 +44,7 @@ router.post('/', async (req, res) => { // Rota para processar mensagens do usuá
           artifactsContext += `\n[${artifact.original_name}]\n${content}\n`;
         }
       }
+      console.log('📄 Preview context:', artifactsContext.substring(0, 200))
     }
 
     // Adicionar artifacts ao histórico
@@ -47,14 +54,13 @@ router.post('/', async (req, res) => { // Rota para processar mensagens do usuá
         content: artifactsContext
       });
     }
-    // Processar mensagem com o coordenador de agentes
-    const history = db.getConversationHistory(convId);
-    let fullResponse = '';
-    
+
+    // Processar mensagem com streaming
     await coordinator.processStream(message, history, (chunk) => {
       fullResponse += chunk;
       res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
     });
+
     // Salvar resposta completa no banco de dados
     db.addMessage(convId, 'assistant', fullResponse);
     res.write(`data: ${JSON.stringify({ done: true, conversationId: convId })}\n\n`);
