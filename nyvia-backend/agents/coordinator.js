@@ -1,13 +1,13 @@
-const keywordsAgent = require('./keywords');
+const metricsAnalyst = require('./metricsAnalyst');
 
 class Coordinator {
   async process(message, history) {
-    const response = await keywordsAgent.execute(message, history);
+    const response = await metricsAnalyst.execute(message, history);
     return { content: response.content };
   }
 
   async processStream(message, history, onChunk) {
-    await keywordsAgent.executeStream(message, history, onChunk);
+    await metricsAnalyst.executeStream(message, history, onChunk);
   }
 }
 
