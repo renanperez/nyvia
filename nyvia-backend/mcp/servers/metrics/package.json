@@ -1,0 +1,7 @@
+{
+  "name": "nyvia-mcp-metrics",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP Metrics Server for Nyvia",
+  "main": "index.js"
+}
